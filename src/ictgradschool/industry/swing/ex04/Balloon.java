@@ -55,7 +55,16 @@ public class Balloon {
     public void move() {
         if (direction == Direction.Right) {
             x = x + speed;
+        } else if (direction == Direction.Left) {
+            x = x - speed;
+        } else if (direction == Direction.Up) {
+            y = y - speed;
+
+        } else if (direction == Direction.Down) {
+            y = y + speed;
         }
+
+
         // TODO Complete the code for the other directions
         
     }

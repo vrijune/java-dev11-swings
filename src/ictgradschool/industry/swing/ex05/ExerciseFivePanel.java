@@ -30,14 +30,19 @@ public class ExerciseFivePanel extends JPanel implements MouseListener, MouseMot
         setBackground(Color.white);
 
         // TODO Add this panel as a mouse listener and mouse motion listener to itself.
+        addMouseListener(this);
+        addMouseMotionListener(this);
     }
 
     /**
      * TODO When the user presses their mouse down on the panel, record the location of that mouse press.
      * TODO Then, repaint the screen.
      */
+
     @Override
     public void mousePressed(MouseEvent e) {
+        mouseDownPoint1 = e.getPoint();
+        repaint();
 
     }
 
@@ -49,6 +54,15 @@ public class ExerciseFivePanel extends JPanel implements MouseListener, MouseMot
     @Override
     public void mouseReleased(MouseEvent e) {
 
+        mouseDownPoint2 = e.getPoint();
+        Rectangle rectangle1 = createRectangle(mouseDownPoint1,mouseDownPoint2,Color.lightGray);
+        shapes.add(rectangle1);
+
+
+        repaint();
+
+
+
     }
 
     /**
@@ -58,6 +72,9 @@ public class ExerciseFivePanel extends JPanel implements MouseListener, MouseMot
      */
     @Override
     public void mouseDragged(MouseEvent e) {
+        mouseDownPoint2 = e.getPoint();
+
+        repaint();
 
     }
 
@@ -76,7 +93,9 @@ public class ExerciseFivePanel extends JPanel implements MouseListener, MouseMot
 
         // TODO If we're currently dragging out a new rectangle, draw its current size in red.
         // Hint: You can just use the createRectangle method, and draw the rectangle that you get back from it.
-
+        if (mouseDownPoint1 != null && mouseDownPoint2 != null) {
+            createRectangle(mouseDownPoint1, mouseDownPoint2, Color.red).draw(g);
+        }
     }
 
     /**

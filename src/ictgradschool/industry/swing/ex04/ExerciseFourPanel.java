@@ -4,15 +4,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 /**
  * Displays an animated balloon.
  */
-public class ExerciseFourPanel extends JPanel implements ActionListener {
+public class ExerciseFourPanel extends JPanel implements ActionListener, KeyListener {
 
-    private  Balloon balloon;
-    private  JButton moveButton;
-
+    private Balloon balloon;
+    private Timer timer;
+    private java.util.List<Balloon> Balloons = new ArrayList<Balloon>();
     /**
      * Creates a new ExerciseFourPanel.
      */
@@ -21,9 +24,9 @@ public class ExerciseFourPanel extends JPanel implements ActionListener {
 
         this.balloon = new Balloon(30, 60);
 
-        this.moveButton = new JButton("Move balloon");
-        this.moveButton.addActionListener(this);
-        this.add(moveButton);
+
+        addKeyListener(this);
+        this.timer = new Timer(100,this);
 
     }
 
@@ -52,8 +55,51 @@ public class ExerciseFourPanel extends JPanel implements ActionListener {
         super.paintComponent(g);
 
         balloon.draw(g);
-        
+
         // Sets focus outside of actionPerformed so key presses work without pressing the button
         requestFocusInWindow();
+    }
+
+
+
+
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+        if (e.getSource() == timer){
+            timer.start();
+        }
+
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_UP:
+                balloon.setDirection(Direction.Up);
+                break;
+            case KeyEvent.VK_DOWN:
+                balloon.setDirection(Direction.Down);
+                break;
+            case KeyEvent.VK_LEFT:
+                balloon.setDirection(Direction.Left);
+                break;
+            case KeyEvent.VK_RIGHT:
+                balloon.setDirection(Direction.Right);
+                break;
+            case KeyEvent.VK_S:
+                timer.stop();
+
+
+        }
+
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }
