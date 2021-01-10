@@ -16,6 +16,7 @@ public class ExerciseFourPanel extends JPanel implements ActionListener, KeyList
     private Balloon balloon;
     private Timer timer;
     private java.util.List<Balloon> Balloons = new ArrayList<Balloon>();
+
     /**
      * Creates a new ExerciseFourPanel.
      */
@@ -37,7 +38,12 @@ public class ExerciseFourPanel extends JPanel implements ActionListener, KeyList
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        balloon.move();
+        balloon.move(getWidth(),getHeight());
+
+        for (int i = 0; i < Balloons.size(); i++) {
+            Balloons.get(i).move(getWidth(),getHeight());
+
+        }
 
         // Sets focus to the panel itself, rather than the JButton. This way, the panel can continue to generate key
         // events even after we've clicked the button.
@@ -56,6 +62,10 @@ public class ExerciseFourPanel extends JPanel implements ActionListener, KeyList
 
         balloon.draw(g);
 
+        for (int i = 0; i < Balloons.size(); i++) {
+            Balloons.get(i).draw(g);
+
+        }
         // Sets focus outside of actionPerformed so key presses work without pressing the button
         requestFocusInWindow();
     }
@@ -72,13 +82,13 @@ public class ExerciseFourPanel extends JPanel implements ActionListener, KeyList
     @Override
     public void keyPressed(KeyEvent e) {
 
-        if (e.getSource() == timer){
+        if (!timer.isRunning())
             timer.start();
-        }
 
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
                 balloon.setDirection(Direction.Up);
+                System.out.println("test");
                 break;
             case KeyEvent.VK_DOWN:
                 balloon.setDirection(Direction.Down);
@@ -91,6 +101,9 @@ public class ExerciseFourPanel extends JPanel implements ActionListener, KeyList
                 break;
             case KeyEvent.VK_S:
                 timer.stop();
+            case KeyEvent.VK_D:
+                Balloon balloons= new Balloon(getX(),getY());
+                Balloons.add(balloons);
 
 
         }
